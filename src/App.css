@@ -14,7 +14,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: url("https://i.pinimg.com/564x/04/c9/ed/04c9ed935567b70808210d1075503f79.jpg");
+  background: url("https://img.freepik.com/premium-photo/minimal-3d-world-mental-health-day-poster-design_950002-111041.jpg?w=1380");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -24,7 +24,8 @@
   align-items: center;
   flex-direction: column;
   opacity: 1;
- 
+  
+
   transition: all .7s;
 }
 
@@ -33,7 +34,7 @@
 .waiting-screen h1 {
   font-size: 30xp;
   text-transform: capitalize;
-  color: #fff;
+  color: black;
 }
 .waiting-screen button {
   margin-top: 30px;
