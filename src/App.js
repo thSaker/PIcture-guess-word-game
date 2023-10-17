@@ -1,58 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Question from "./Question";
 import Score from "./Score";
 import questionBank from "./questionBank.json";
+import ModalEndGame from "./ModalEndGame";
 
 function App() {
+  const [start, setStart] = useState(true)
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+
+  const waitingScreen = useRef()
 
   useEffect(() => {
-    // Lấy danh sách tất cả câu hỏi
     const allQuestions = questionBank.slice();
-
-    // Trộn lẫn câu hỏi để chọn ngẫu nhiên
     const shuffledQuestions = shuffleArray(allQuestions);
-
-    // Chọn 5 câu hỏi đầu tiên
     const selectedQuestions = shuffledQuestions.slice(0, 5);
-
     setQuestions(selectedQuestions);
   }, []);
 
   const handleAnswer = (userAnswer) => {
     if (userAnswer === questions[currentQuestion].word) {
-      // Trả lời đúng, cộng điểm
+      if (currentQuestion < 4) {
+        setCurrentQuestion(currentQuestion + 1);
+      } else {
+        setGameOver(true)
+      }
       setScore(score + 1);
-    }
-    // Chuyển sang câu hỏi tiếp theo
-    if (currentQuestion < 4) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      alert(`Game Over! Your Score: ${score}`);
-      setCurrentQuestion(0);
-      setScore(0);
     }
   };
 
-  const handleRestart = () => {
-    // Chuyển sang câu hỏi tiếp theo nếu còn câu hỏi
-    if (currentQuestion < 4) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      // Nếu hết câu hỏi, quay lại câu hỏi đầu tiên
+  const handleRestart = (restart = false) => {
+    if (restart) {
       setCurrentQuestion(0);
+      setScore(0); // Đặt lại điểm số khi bắt đầu chơi lại
+      return;
     }
 
-    // Reset điểm số về 0
-    setScore(0);
+    if (currentQuestion < 4 && score < 5) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      // setCurrentQuestion(0);
+      setScore(score + 1); // Đặt lại điểm số khi bắt đầu chơi lại
+    }
   };
 
   return (
     <div className="App">
-      <h1 style={{ marginTop: "100px" }}>Picture Word Game</h1>
+      <div className="waiting-screen" ref={waitingScreen}>
+        <h1>Picture guess word game</h1>
+        <button onClick={() => {
+          waitingScreen.current.style.opacity = 0;
+          waitingScreen.current.style = ' transform: translateX(-100%);'
+          setTimeout(() => waitingScreen.current.style.display = "none", 700)
+          
+        }}>Start</button>
+      </div>
+      <h1 style={{ paddingTop: 30 }}>Picture Word Game</h1>
       {questions.length > 0 && (
         <>
           <Score score={score} />
@@ -61,9 +67,11 @@ function App() {
             word={questions[currentQuestion].word}
             onAnswer={handleAnswer}
             onRestart={handleRestart}
+            score={score}
           />
         </>
       )}
+      <ModalEndGame show={gameOver} handleClose={() => setGameOver(false)} score={score} restart={handleRestart} setCurrentQuestion={setCurrentQuestion} setScore={setScore}/>
     </div>
   );
 }

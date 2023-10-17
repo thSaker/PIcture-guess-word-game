@@ -1,6 +1,45 @@
 .App {
   text-align: center;
-  
+  width: 100vw;
+  height: 100vh;
+  background: url("https://cdna.artstation.com/p/assets/images/images/010/601/496/4k/tyler-edlin-fantasy-landscape1.jpg?1525276483");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.waiting-screen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: url("https://i.pinimg.com/564x/04/c9/ed/04c9ed935567b70808210d1075503f79.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 1;
+ 
+  transition: all .7s;
+}
+
+
+
+.waiting-screen h1 {
+  font-size: 30xp;
+  text-transform: capitalize;
+  color: #fff;
+}
+.waiting-screen button {
+  margin-top: 30px;
+  padding: 12px 40px;
+  border: none;
+  font-size: 20px;
 }
 
 .App-logo {
