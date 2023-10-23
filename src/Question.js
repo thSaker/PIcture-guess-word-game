@@ -28,6 +28,7 @@ function Question({ image, word, onAnswer, onRestart, score }) {
     setNumCharacters(word.length);
   }, [word, numCharacters]);
 
+  // Hàm chọn chữ cái
   const handleLetterClick = (letter, index) => {
     const emptySlotIndex = chosenLetters.findIndex((char) => char === "");
 
@@ -45,35 +46,34 @@ function Question({ image, word, onAnswer, onRestart, score }) {
   const handleDeleteClick = () => {
     if (defeated) return;
 
-    // Find the index of the last non-empty slot in chosenLetters
+    
     const lastNonEmptyIndex = chosenLetters
       .slice()
       .reverse()
       .findIndex((char) => char !== "");
     if (lastNonEmptyIndex !== -1) {
-      // Clone chosenLetters and remove the last non-empty character
+      
       const updatedChosenLetters = [...chosenLetters];
       updatedChosenLetters[chosenLetters.length - 1 - lastNonEmptyIndex] = "";
 
-      // Remove the last non-empty character from availableLetters and add it back
+      
       const removedCharacter =
         chosenLetters[chosenLetters.length - 1 - lastNonEmptyIndex];
       setAvailableLetters([...availableLetters, removedCharacter]);
 
-      // Update chosenLetters
+     
       setChosenLetters(updatedChosenLetters);
     }
   };
 
   const handleDefeatClick = () => {
     setRestartModal(true);
-    // alert("You accepted defeat. The answer is: " + word);
-    // onRestart(); // Call the onRestart function from App.js
+    
   };
 
   function nextQuestion() {
-    onAnswer(answer); // Tăng điểm số
-    onRestart(); // Chuyển sang câu hỏi tiếp theo
+    onAnswer(answer); 
+    onRestart(); 
   }
 
   const handleAnswerClick = () => {
@@ -83,8 +83,7 @@ function Question({ image, word, onAnswer, onRestart, score }) {
       setAnswer(userAnswer)
       setIsNext(true)
     } else {
-      // setIsCorrect(false)
-      setIsNext(false);
+      setIsNext(true);
     }
   };
 
@@ -147,7 +146,7 @@ function Question({ image, word, onAnswer, onRestart, score }) {
     </div>
   );
 }
-
+                                            // mảng chữ cái loại bỏ, và số kị tự thêm vào 
 function generateRandomNonDuplicateLetters(excludeLetters, count) {
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   const randomLetters = [];

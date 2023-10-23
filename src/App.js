@@ -6,7 +6,7 @@ import questionBank from "./questionBank.json";
 import ModalEndGame from "./ModalEndGame";
 
 function App() {
-  const [start, setStart] = useState(true)
+  
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -35,15 +35,15 @@ function App() {
   const handleRestart = (restart = false) => {
     if (restart) {
       setCurrentQuestion(0);
-      setScore(0); // Đặt lại điểm số khi bắt đầu chơi lại
+      setScore(0); 
       return;
     }
 
     if (currentQuestion < 4 && score < 5) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      // setCurrentQuestion(0);
-      setScore(score + 1); // Đặt lại điểm số khi bắt đầu chơi lại
+      
+      setScore(score + 1); 
     }
   };
 
